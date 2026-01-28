@@ -90,8 +90,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'cloudone_db',
-        'USER': 'postgres',
-        'PASSWORD': 'MichAels786',
+        'USER': 'clouone_user',
+        'PASSWORD': '1111',
         'HOST': 'localhost',
         'PORT': '5432',
     }
