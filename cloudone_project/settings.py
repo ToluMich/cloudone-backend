@@ -88,10 +88,15 @@ WSGI_APPLICATION = 'cloudone_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'cloudone_db',
+        'USER': 'postgres',
+        'PASSWORD': 'MichAels786',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
+
 
 AUTH_USER_MODEL = 'users.User'
 
