@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-4qoz(x31x*z6&tm*w@xo83d1(avuz#^5klq)$i%i42xa6m)fl(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -57,8 +57,9 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'cloudone_project.urls'
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # React dev server
-    "http://localhost:3000",  # If you also use CRA
+    '*'
+    # "http://localhost:5173",  # React dev server
+    # "http://localhost:3000",  # If you also use CRA
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
