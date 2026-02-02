@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config, Csv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-4qoz(x31x*z6&tm*w@xo83d1(avuz#^5klq)$i%i42xa6m)fl('
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['*']
 
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'users',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -57,9 +59,9 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'cloudone_project.urls'
 
 CORS_ALLOWED_ORIGINS = [
-    '*'
-    # "http://localhost:5173",  # React dev server
-    # "http://localhost:3000",  # If you also use CRA
+    # '*'
+    "http://localhost:5173",  # React dev server
+    "http://localhost:3000",  # If you also use CRA
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -90,11 +92,13 @@ WSGI_APPLICATION = 'cloudone_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cloudone_db',
-        'USER': 'cloudone_user',
-        'PASSWORD': '1111',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        # 'USER': 'cloudone_user',
+        'PASSWORD': config('DB_PASSWORD'),
+        # 'PASSWORD': '1111',
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
     }
 }
 
@@ -144,6 +148,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
@@ -157,3 +162,26 @@ SIMPLE_JWT = {
 }
 
 GOOGLE_CLIENT_ID = "549561926003-utrofu99eqlj3kr432b9q0495spg41vq.apps.googleusercontent.com"
+
+
+# settings.py
+
+# 1. Use the SMTP backend
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# 2. Gmail SMTP settings
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+# 3. Credentials (Use an "App Password", not your login password)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER') 
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+# 4. Default sender address
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
+
+GITHUB_CLIENT_ID=config('GITHUB_CLIENT_ID')
+GITHUB_CLIENT_SECRET=config('GITHUB_CLIENT_SECRET')
+
+BASE_URL = config('BASE_URL', default='http://localhost:8000')
